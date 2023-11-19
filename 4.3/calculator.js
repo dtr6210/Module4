@@ -1,37 +1,48 @@
-function calculate(operator) {
-    let num1 = parseFloat(document.getElementById('num1').value);
-    let num2 = parseFloat(document.getElementById('num2').value);
+let display = document.getElementById('display');
+let currentInput = '';
+let operator = '';
+let firstOperand = '';
 
-    if (isNaN(num1) || isNaN(num2)) {
-        alert('Please enter valid numbers');
-        return;
-    }
-
-    let result;
-
-    switch (operator) {
-        case '+':
-            result = num1 + num2;
-            break;
-        case '-':
-            result = num1 - num2;
-            break;
-        case '*':
-            result = num1 * num2;
-            break;
-        case '/':
-            result = num1 / num2;
-            break;
-        default:
-            alert('Invalid operator');
-            return;
-    }
-
-    document.getElementById('result').innerHTML = 'Result: ' + result;
+function appendToDisplay(value) {
+    currentInput += value;
+    display.value = currentInput;
 }
 
-function reset() {
-    document.getElementById('num1').value = '';
-    document.getElementById('num2').value = '';
-    document.getElementById('result').innerHTML = '';
+function clearDisplay() {
+    currentInput = '';
+    operator = '';
+    firstOperand = '';
+    display.value = '';
+}
+
+function setOperator(op) {
+    operator = op;
+    firstOperand = currentInput;
+    currentInput = '';
+}
+
+function calculateResult() {
+    if (operator && firstOperand && currentInput) {
+        let result;
+        const num1 = parseFloat(firstOperand);
+        const num2 = parseFloat(currentInput);
+
+        switch (operator) {
+            case '+':
+                result = num1 + num2;
+                break;
+            case '-':
+                result = num1 - num2;
+                break;
+            case '*':
+                result = num1 * num2;
+                break;
+            case '/':
+                result = num1 / num2;
+                break;
+        }
+
+        clearDisplay();
+        display.value = result;
+    }
 }
