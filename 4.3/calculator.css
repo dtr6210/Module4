@@ -1,0 +1,35 @@
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background-color: rgb(223, 231, 231);
+}
+
+.calculator {
+    display: grid;
+    grid-template-rows: auto repeat(4, 1fr);
+    text-align: center;
+}
+
+#display {
+    grid-row: 1;
+    grid-column: 1 / -1;
+    font-size: 24px;
+    height: 30px;
+    text-align: right;
+   
+}
+
+.button-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 5px;
+}
+
+button {
+    width: 100%;
+    height: 50px;
+    font-size: 18px;
+}
