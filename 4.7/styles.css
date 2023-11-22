@@ -1,0 +1,32 @@
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.square {
+  width: 150px;
+  height: 150px;
+  background-color: red;
+  animation: animatedSquare 3000ms infinite;
+  position: relative;
+}
+
+@keyframes animatedSquare {
+  0% {
+    background: red;
+    top: 0px;
+  }
+
+  50% {
+    background: blue;
+    top: 200px;
+  }
+
+  100% {
+    background: red;
+    top: -200px;
+  }
+}
