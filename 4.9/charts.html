@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lab #9 eCharts</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.1/dist/echarts.min.js"></script>
+  </head>
+  <body>
+    <!-- Prepare a DOM with a defined width and height for ECharts -->
+    <div id="main" style="width: 900px; height: 600px"></div>
+    <script type="text/javascript">
+      //Initialize the echarts instance based on the prepared dom
+      let myChart = echarts.init(document.getElementById("main"));
+
+      //Fetch data from the FakeSore API
+
+      fetch("https://fakestoreapi.com/products")
+        .then((response) => response.json())
+        .then((products) => {
+          console.log(products);
+
+          //Count the number of items in each category
+
+          const categoryCount = {};
+          products.forEach((product) => {
+            const category = product.category;
+            categoryCount[category] = (categoryCount[category] || 0) + 1;
+          });
+
+          //Generate xAxis and data from counted categories
+
+          const categories = Object.keys(categoryCount);
+          const data = categories.map((category) => categoryCount[category]);
+
+          // Specify the configuration items and data for the chart
+          let options = {
+            title: { text: "Fake Store Categories" },
+            xAxis: {
+              data: categories,
+            },
+            yAxis: {},
+            series: [
+              {
+                name: "# products",
+                type: "bar",
+                data: data,
+                itemStyle: {
+                    color: "red",
+                }
+              },
+            ],
+          };
+
+          //Display the chart
+          myChart.setOption(options);
+        });
+    </script>
+  </body>
+</html>
