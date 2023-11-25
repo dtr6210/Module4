@@ -1,16 +1,18 @@
 document.addEventListener("DOMContentLoaded", function () {
   console.log("DOM content loaded");
 
-  const categoryDropdownItems = document.querySelectorAll(".dropdown-item");
+  const categoryDropdown = document.getElementById("categoryDropdown");
   const postContainer = document.getElementById("post-container");
 
   //Function to fetch data by category
   function fetchData(category) {
+    //clear existing content in the postContainer
+    postContainer.innerHTML = '';
     axios
       .get(`https://fakestoreapi.com/products/category/${category}`)
       .then((response) => {
         console.log(response.data);
-        const products = response.data;
+        const products = Array.isArray(response.data) ? response.data: [];
 
      
         products.forEach((product) => {
@@ -48,11 +50,13 @@ document.addEventListener("DOMContentLoaded", function () {
         });
       });
   }
-  categoryDropdownItems.forEach((item) => {
-    item.addEventListener('click', function (event) {
-        const selectedCategory = event.target.dataset.category;
-        fetchData(selectedCategory);
-    });
+
+  //Event listener for the select element
+  categoryDropdown.addEventListener('change', function () {
+    const selectedCategory = categoryDropdown.value;
+    console.log("Selected Category:", selectedCategory);
+    fetchData(selectedCategory);
   });
-  fetchData("electronics");
+  
+  fetchData(categoryDropdown.value);
 });
